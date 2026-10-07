@@ -131,7 +131,7 @@ def Softmax(S):
 #the first term is the average cross-entropy loss, and the second term is the L2 regularization term.
 def softmax_loss(W, Xb, y, lam):
     P = np.clip(Softmax(Xb @ W), 1e-12, 1)
-    ce = -np.mean(np.sum(Y * np.log(P), axis=1))
+    ce = -np.mean(np.sum(y * np.log(P), axis=1))
     return ce + 0.5 * lam * np.sum(W[1:] ** 2) # Add regularization term, but not for bias 
 
 
@@ -143,7 +143,7 @@ def softmax_gradient(W, Xb, y, lam):
     P = Softmax(Xb @ W)
     W_tilde = W.copy()
     W_tilde[0] = 0 # don't regularize the bias term
-    return Xb.T @ (P - Y) / n + lam * W_tilde
+    return Xb.T @ (P - y) / n + lam * W_tilde
 
 
 # Softmax Regression class
